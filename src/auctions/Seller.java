@@ -1,13 +1,14 @@
 package auctions;
 
-public class Seller {
+public class Seller extends User{
 	
 	private String username;
 	private String password;
+	
 
 	public Seller(String username, String password) {
-		this.username = username;
-		this.password = password;
+		super(username, password);
+
 	}
 
 	public boolean validatePass(String userPass) {

@@ -1,12 +1,11 @@
 package auctions;
 
-public class Buyer {
+public class Buyer extends User {
 	private String username;
 	private String password;
 
 	public Buyer(String username, String password) {
-		this.username = username;
-		this.password = password;
+		super(username, password);
 	}
 
 	public boolean validatePass(String userPass) {
@@ -20,6 +19,10 @@ public class Buyer {
     }
 	public String getUsername() {
 		return username;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 }
 

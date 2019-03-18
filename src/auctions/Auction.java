@@ -9,7 +9,6 @@ public class Auction {
 	private double startPrice;
 	private double reservePrice;
 	private LocalDateTime minusSeconds;
-	private LocalDateTime plusSeconds;
 
 	public Auction(double startPrice, double reservePrice, LocalDateTime minusSeconds) {
 		this.startPrice = startPrice;

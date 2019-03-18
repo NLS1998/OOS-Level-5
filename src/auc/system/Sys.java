@@ -1,6 +1,7 @@
 package auc.system;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,16 +11,17 @@ import auctions.Auction;
 import auctions.Buyer;
 import auctions.Seller;
 import auctions.User;
+import java.text.DecimalFormat;
 
 public class Sys {
 
 	private final Scanner Scan = new Scanner(System.in);
 
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
-	private List<User> users = new LinkedList<User>();
+	public List<User> users = new LinkedList<User>();
 
-	private Seller seller;
-	private Buyer buyer;
+	public Seller seller;
+	public Seller buyer;
 
 	public Sys() {
 		users.add(new Seller("Jack", "1122"));
@@ -65,5 +67,6 @@ public class Sys {
 			return false;
 		}
 	}
+
 
 }

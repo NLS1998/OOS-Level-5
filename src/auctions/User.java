@@ -1,6 +1,6 @@
 package auctions;
 
-public final class User {
+public class User {
 	private String Username;
 	private String Password;
 
@@ -22,4 +22,5 @@ public final class User {
 		return Username;
 		
 	}
+	
 }
