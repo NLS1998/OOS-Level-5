@@ -1,7 +1,6 @@
 package auc.system;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +10,6 @@ import auctions.Auction;
 import auctions.Buyer;
 import auctions.Seller;
 import auctions.User;
-import java.text.DecimalFormat;
 
 public class Sys {
 
@@ -46,27 +44,48 @@ public class Sys {
 		}
 	}
 
-	
-	private User getUser(String Username) {
-		for (User currentUser : users) {
-			if (currentUser.getUsername().equals(Username)) {
-				return currentUser;
+	private boolean userAuthenticate = false;
 
+	public void displayMessageLine(String message) {
+		System.out.println(message);
+	}
+
+	public void displayMessage(String message) {
+		System.out.print(message);
+	}
+
+	public void run() {
+		while (true) {
+			while (!userAuthenticate) {
+				displayMessageLine("");
+				displayMessageLine("Welcome!");
+				authenticateUser();
 			}
 		}
-
-		return null;
 	}
+	boolean authenticate = false;
+	private void authenticateUser() {
+		displayMessageLine("");
+		displayMessage("Please enter your Username : ");
+		String Username = Scan.nextLine();
+	
+		displayMessageLine("");
+		displayMessage("Please enter your Password : ");
+		String Password = Scan.nextLine();
+	
+		for (int i = 0; i < users.size(); i++) {
+			for (int j = 0; j < users.size(); j++) {
+				if (Username.equals(users.get(i).getUsername())) {
+					if (Password.equals(users.get(j).getPassword())) {
+					displayMessageLine("welcomeeeeeeeeeeeeeeeeeee");
+				} else {
+					
+					displayMessageLine("Wrong Username or Password. Please try again!");
+					
+				}
+			
 
-	public boolean authenticateUser(String usernameAccount, String userPass) {
-		User userAccount = getUser(usernameAccount);
-
-		if (userAccount != null) {
-			return userAccount.validatePass(userPass);
-		} else {
-			return false;
 		}
 	}
 
-
-}
+}}}
