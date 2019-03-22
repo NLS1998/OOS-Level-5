@@ -72,16 +72,21 @@ public class Sys {
 		System.out.println("Please enter your Password : ");
 		String Password = Scans.next();
 
-		for (int i = 0; i < users.size(); i++) {
-			User object = users.get(i);
-			if (object != null) {
-				if (object.Username.equals(Username) && (object.Password.equals(Password))) {
-					System.out.println("Logged in as " + object.DatatoCSVString());
-					
-				} else {
-					
-					System.out.println("nope");
-					
+		
+		boolean isExist = false;
+		
+		for(User u : users ) {
+			if (u.Username.equals(Username) && (u.Password.equals(Password))) {
+				isExist = true;
+				break;
+			}
+			
+		}
+			if(isExist) {
+				System.out.println("Logged in as " + Username);
+			} else {
+				System.out.println("Sorry Please Try Again!!!!");
+					login(users);
 					// for (int i = 0; i < users.size(); i++) {
 					// User u = users.get(i);
 					// boolean userPass = u.Username.equals(Username) &&
@@ -103,5 +108,4 @@ public class Sys {
 
 		}
 
-	}
-}
+
