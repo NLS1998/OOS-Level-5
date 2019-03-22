@@ -1,8 +1,8 @@
 package auctions;
 
 public class User {
-	private String Username;
-	private String Password;
+	public String Username;
+	public String Password;
 
 	public User(String Username, String Password) {
 		this.Username = Username;
@@ -26,5 +26,8 @@ public class User {
 	public String getPassword(){
 		return Password;
 		
+	}
+	public String DatatoCSVString() {
+		return Username;
 	}
 }

@@ -1,6 +1,7 @@
 package auc.system;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,17 +17,17 @@ public class Sys {
 	private final Scanner Scan = new Scanner(System.in);
 
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
-	public List<User> users = new LinkedList<User>();
+	private List<User> users = new ArrayList<User>();
 
 	public Seller seller;
 	public Seller buyer;
 
 	public Sys() {
-		users.add(new Seller("Jack", "1122"));
-		users.add(new Seller("Robby", "2211"));
-		users.add(new Buyer("Nick", "1111"));
-		users.add(new Buyer("Robbie", "2222"));
-		users.add(new Buyer("David", "3333"));
+		users.add(new Seller("jack", "1122"));
+		users.add(new Seller("robby", "2211"));
+		users.add(new Buyer("nick", "1111"));
+		users.add(new Buyer("robbie", "2222"));
+		users.add(new Buyer("david", "3333"));
 
 		try {
 			auctions.add(new Auction(7.50, 12.50, LocalDateTime.now().minusSeconds(40)));
@@ -44,7 +45,6 @@ public class Sys {
 		}
 	}
 
-	private boolean userAuthenticate = false;
 
 	public void displayMessageLine(String message) {
 		System.out.println(message);
@@ -55,37 +55,53 @@ public class Sys {
 	}
 
 	public void run() {
-		while (true) {
-			while (!userAuthenticate) {
-				displayMessageLine("");
-				displayMessageLine("Welcome!");
-				authenticateUser();
-			}
-		}
+
+		displayMessageLine("");
+		displayMessageLine("Auction App");
+		login(users);
 	}
-	boolean authenticate = false;
-	private void authenticateUser() {
-		displayMessageLine("");
-		displayMessage("Please enter your Username : ");
-		String Username = Scan.nextLine();
-	
-		displayMessageLine("");
-		displayMessage("Please enter your Password : ");
-		String Password = Scan.nextLine();
-	
+
+	private static void login(List<User> users) {
+		Scanner Scans = new Scanner(System.in);
+
+		System.out.println("");
+		System.out.println("Please enter your Username : ");
+		String Username = Scans.next();
+
+		System.out.println("");
+		System.out.println("Please enter your Password : ");
+		String Password = Scans.next();
+
 		for (int i = 0; i < users.size(); i++) {
-			for (int j = 0; j < users.size(); j++) {
-				if (Username.equals(users.get(i).getUsername())) {
-					if (Password.equals(users.get(j).getPassword())) {
-					displayMessageLine("welcomeeeeeeeeeeeeeeeeeee");
+			User object = users.get(i);
+			if (object != null) {
+				if (object.Username.equals(Username) && (object.Password.equals(Password))) {
+					System.out.println("Logged in as " + object.DatatoCSVString());
+					
 				} else {
 					
-					displayMessageLine("Wrong Username or Password. Please try again!");
+					System.out.println("nope");
 					
+					// for (int i = 0; i < users.size(); i++) {
+					// User u = users.get(i);
+					// boolean userPass = u.Username.equals(Username) &&
+					// u.Password.equals(Password);
+					// if (userPass) {
+					// displayMessage("Logged In As " + u);
+					// break;
+					// } else {
+					// displayMessage("poop");
+					//
+					// }
+					//
+					//
+					// }
+					// return userAuthenticate;
 				}
-			
+
+			}
 
 		}
-	}
 
-}}}
+	}
+}

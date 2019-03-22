@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Auction {
-	private Date closeDate;
-	private char status;
 	private double startPrice;
 	private double reservePrice;
 	private LocalDateTime minusSeconds;
@@ -18,5 +16,15 @@ public class Auction {
 		// TODO Auto-generated constructor stub
 	}
 
+	public double getStartPrice() {
+		return startPrice;
+	}
 
+	public double getReservePrice() {
+		return reservePrice;
+	}
+	
+	public LocalDateTime getDateTime() {
+		return minusSeconds;
+	}
 }

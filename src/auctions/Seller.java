@@ -2,8 +2,8 @@ package auctions;
 
 public class Seller extends User{
 	
-	private String username;
-	private String password;
+	private String Username;
+	private String Password;
 	
 
 	public Seller(String username, String password) {
@@ -12,7 +12,7 @@ public class Seller extends User{
 	}
 
 	public boolean validatePass(String userPass) {
-        if (password == userPass) {
+        if (Password == userPass) {
             return true;
         }
         else {
@@ -21,6 +21,7 @@ public class Seller extends User{
 
     }
 	public String getUsername() {
-		return username;
+		return Username;
 	}
+	
 }
