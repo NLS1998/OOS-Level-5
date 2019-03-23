@@ -15,12 +15,10 @@ import auctions.User;
 public class Sys {
 
 	private final Scanner Scan = new Scanner(System.in);
+	String choice = "";
 
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
 	private List<User> users = new ArrayList<User>();
-
-	public Seller seller;
-	public Seller buyer;
 
 	public Sys() {
 		users.add(new Seller("jack", "1122"));
@@ -45,7 +43,6 @@ public class Sys {
 		}
 	}
 
-
 	public void displayMessageLine(String message) {
 		System.out.println(message);
 	}
@@ -55,10 +52,27 @@ public class Sys {
 	}
 
 	public void run() {
+		do {
+			System.out.println("\n**AUCTON MAIN MENU **");
+			System.out.println("1 - Browse Auctions"); // Feature A
+			System.out.println("2 - Login");
+			System.out.println("Q - Quit");
+			System.out.print("Pick : ");
 
-		displayMessageLine("");
-		displayMessageLine("Auction App");
-		login(users);
+			choice = Scan.next().toUpperCase();
+
+			switch (choice) {
+			case "1": {
+				break;
+			}
+			case "2": {
+				login(users);
+				break;
+			}
+			}
+		} while (!choice.equals("Q"));
+		System.out.println("-- GOODBYE --");
+
 	}
 
 	private static void login(List<User> users) {
@@ -72,40 +86,38 @@ public class Sys {
 		System.out.println("Please enter your Password : ");
 		String Password = Scans.next();
 
-		
 		boolean isExist = false;
-		
-		for(User u : users ) {
+
+		for (User u : users) {
 			if (u.Username.equals(Username) && (u.Password.equals(Password))) {
 				isExist = true;
 				break;
+
 			}
-			
 		}
-			if(isExist) {
-				System.out.println("Logged in as " + Username);
-			} else {
-				System.out.println("Sorry Please Try Again!!!!");
-					login(users);
-					// for (int i = 0; i < users.size(); i++) {
-					// User u = users.get(i);
-					// boolean userPass = u.Username.equals(Username) &&
-					// u.Password.equals(Password);
-					// if (userPass) {
-					// displayMessage("Logged In As " + u);
-					// break;
-					// } else {
-					// displayMessage("poop");
-					//
-					// }
-					//
-					//
-					// }
-					// return userAuthenticate;
+		if (isExist) {
+			System.out.println("Logged in as " + Username);
+			boolean here = false;
+			for (User u : users) {
+
+				while (u.Username.equals(Username)) {
+					if (u instanceof Buyer) {
+						System.out.println("Buyer");
+						here = true;
+						break;
+
+					} else {
+						System.out.println("Seller");
+						break;
+					}
 				}
 
 			}
 
+		} else {
+			System.out.println("Sorry Please Try Again!!!!");
+			login(users);
 		}
 
-
+	}
+}
