@@ -18,7 +18,7 @@ public class Sys {
 	String choice = "";
 
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
-	private List<User> users = new ArrayList<User>();
+	private List<User> users = new LinkedList<User>();
 
 	public Sys() {
 		users.add(new Seller("jack", "1122"));
@@ -89,7 +89,7 @@ public class Sys {
 		boolean isExist = false;
 
 		for (User u : users) {
-			if (u.Username.equals(Username) && (u.Password.equals(Password))) {
+			while (u.Username.equals(Username) && (u.Password.equals(Password))) {
 				isExist = true;
 				break;
 
@@ -97,13 +97,11 @@ public class Sys {
 		}
 		if (isExist) {
 			System.out.println("Logged in as " + Username);
-			boolean here = false;
 			for (User u : users) {
-
 				while (u.Username.equals(Username)) {
 					if (u instanceof Buyer) {
 						System.out.println("Buyer");
-						here = true;
+
 						break;
 
 					} else {

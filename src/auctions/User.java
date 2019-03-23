@@ -1,6 +1,6 @@
 package auctions;
 
-public class User {
+public abstract class User {
 	public String Username;
 	public String Password;
 
@@ -10,27 +10,19 @@ public class User {
 		this.Password = Password;
 	}
 
-	public boolean validatePass(String userPass) {
-		if (Password == userPass) {
-			return true;
-
-		} else {
-			return false;
-		}
-	}
-	
-	public String getUsername(){
+	public String getUsername() {
 		return Username;
-		
 	}
 	
-	public String getPassword(){
+	 public void setUsername(String name) {
+	       this.Username = name;
+	    } 
+	
+	public String getPassword() {
 		return Password;
-		
-	}
-	public String DatatoCSVString() {
-		return Username;
-	}
+		}
 	
-	
+	public void setPassword(String Pass) {
+		this.Password = Pass;
+	}
 }
