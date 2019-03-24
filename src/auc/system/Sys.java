@@ -1,7 +1,6 @@
 package auc.system;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class Sys {
 
 		try {
 			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(86400)));
 			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
 
 			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
@@ -41,14 +40,6 @@ public class Sys {
 		} catch (Exception e) {
 
 		}
-	}
-
-	public void displayMessageLine(String message) {
-		System.out.println(message);
-	}
-
-	public void displayMessage(String message) {
-		System.out.print(message);
 	}
 
 	public void run() {
@@ -77,13 +68,14 @@ public class Sys {
 	}
 
 	public void browseAuctions() {
-		for(Auction auction : auctions) {
+		for (Auction auction : auctions) {
 			System.out.println("Name of Auction -> " + auction.getItemName());
+			System.out.println("Reserve Price -> £" + auction.getReservePrice());
 			System.out.println("Start Price -> £" + auction.getStartPrice());
-			System.out.println("Time Left -> " + auction.getDateTime());
+			System.out.println("End Time/Date -> " + auction.formatDateTime());
 			System.out.println("");
 		}
-		
+
 	}
 
 	private void login(List<User> users) {
@@ -110,12 +102,10 @@ public class Sys {
 			for (User u : users) {
 				while (u.Username.equals(Username)) {
 					if (u instanceof Buyer) {
-						System.out.println("Buyer");
 						buyerMenu();
 						break;
 
 					} else {
-						System.out.println("Seller");
 						sellerMenu();
 						break;
 					}
@@ -138,38 +128,32 @@ public class Sys {
 			System.out.println("-- Buyer Menu --");
 			System.out.println("1 -- View Active Auctions");
 			System.out.println("2 -- Make a Bid");
-			System.out.println("L1 -- Log out of System and Return to Main Menu");
-			System.out.println("L2 -- Log out of System and Quit Program");
+			System.out.println("L -- Log out of System and Return to Main Menu");
+			System.out.println("Q -- Log out of System and Quit Program");
 
 			decision = Scan.next().toUpperCase();
 
 			switch (decision) {
 			case "1": {
-				activeAuctions();
+				browseAuctions();
 				break;
 			}
 			case "2": {
 				makeBid();
 				break;
 			}
-			case "L1": {
-				logOutReturn();
-				break;
-			}
-			case "L2": {
-				logOutQuit();
+			case "L": {
+				System.out.println("Logged Out");
+				run();
 				break;
 			}
 			}
-		} while (!decision.equals(""));
-
+		} while (!decision.equals("Q"));
+		System.out.println("-- GOODBYE --");
+		System.exit(0);
 	}
 
 	private void makeBid() {
-
-	}
-
-	private void activeAuctions() {
 
 	}
 
@@ -181,8 +165,8 @@ public class Sys {
 			System.out.println("-- Seller Menu --");
 			System.out.println("1 -- Create an Auction");
 			System.out.println("2 -- Show your Current Auctions");
-			System.out.println("L1 -- Log out of System and Return to Main Menu");
-			System.out.println("L2 -- Log out of System and Quit Program");
+			System.out.println("L -- Log out of System and Return to Main Menu");
+			System.out.println("Q -- Log out of System and Quit Program");
 
 			decision = Scan.next().toUpperCase();
 
@@ -195,16 +179,14 @@ public class Sys {
 				currentAuctions();
 				break;
 			}
-			case "L1": {
-				logOutReturn();
-				break;
-			}
-			case "L2": {
-				logOutQuit();
+			case "L": {
+				run();
 				break;
 			}
 			}
-		} while (!decision.equals(""));
+		} while (!decision.equals("Q"));
+		System.out.println("-- GOODBYE --");
+		System.exit(0);
 	}
 
 	private void createAuction() {
@@ -215,11 +197,4 @@ public class Sys {
 
 	}
 
-	private void logOutReturn() {
-		run();
-	}
-
-	private void logOutQuit() {
-		System.exit(0);
-	}
 }
