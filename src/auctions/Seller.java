@@ -23,5 +23,10 @@ public class Seller extends User{
 	public String getUsername() {
 		return Username;
 	}
+
+	public boolean isBlocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

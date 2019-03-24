@@ -20,7 +20,7 @@ public class Sys {
 	private List<User> users = new ArrayList<User>();
 
 	public Seller seller;
-	public Seller buyer;
+	public Buyer buyer;
 
 	public Sys() {
 		users.add(new Seller("jack", "1122"));
@@ -44,7 +44,57 @@ public class Sys {
 
 		}
 	}
+	
+public void mainMenu() {
+ 		
+ 		String decision = ""; 
+ 		
+ 		do {
+ 			System.out.println("-- Auction System --");
+ 			System.out.println("1 -- Log In");
+ 			System.out.println("2 -- Make a bid");
+ 			System.out.println("3 -- Start Auction");
+ 			System.out.println("4 -- View Auctions");
+ 			System.out.println("Q -- Quit System");
+ 			
+ 			decision = Scan.next().toUpperCase(); 
+ 			
+ 			switch(decision) {
+ 			case"1": {
+ 				login();
+ 				break;
+ 			}
+ 			case"2": {
+ 				makeBid();
+ 				break;
+ 			}
+ 			case"3": {
+ 				startAuction();
+ 				break; 
+ 			}
+ 			case"4": {
+ 				viewAuctions();
+ 				break;
+ 			}
+ 			}
+ 		} while (!decision.equals("Q"));
+ 		System.out.println("-- Thanks for Visiting --");
+ 		System.exit(0);
+ 	}
 
+	private void viewAuctions() {
+	
+	}
+
+	private void startAuction() {
+	
+	}
+
+	private void makeBid() {
+	
+	}
+	
+	
 
 	public void displayMessageLine(String message) {
 		System.out.println(message);
@@ -54,54 +104,126 @@ public class Sys {
 		System.out.print(message);
 	}
 
-	public void run() {
-
-		displayMessageLine("");
-		displayMessageLine("Auction App");
-		login(users);
-	}
-
-	private static void login(List<User> users) {
-		Scanner Scans = new Scanner(System.in);
+	private void login() {
 
 		System.out.println("");
 		System.out.println("Please enter your Username : ");
-		String Username = Scans.next();
+		String Username = Scan.next();
 
 		System.out.println("");
 		System.out.println("Please enter your Password : ");
-		String Password = Scans.next();
+		String Password = Scan.next();
 
 		for (int i = 0; i < users.size(); i++) {
 			User object = users.get(i);
 			if (object != null) {
 				if (object.Username.equals(Username) && (object.Password.equals(Password))) {
 					System.out.println("Logged in as " + object.DatatoCSVString());
-					
-				} else {
-					
-					System.out.println("nope");
-					
-					// for (int i = 0; i < users.size(); i++) {
-					// User u = users.get(i);
-					// boolean userPass = u.Username.equals(Username) &&
-					// u.Password.equals(Password);
-					// if (userPass) {
-					// displayMessage("Logged In As " + u);
-					// break;
-					// } else {
-					// displayMessage("poop");
-					//
-					// }
-					//
-					//
-					// }
-					// return userAuthenticate;
-				}
-
+					if (Seller.class.isInstance(users)) {
+	 					seller = (Seller)users;
+	 					
+	 					if (!seller.isBlocked()) {
+	 						sellerMenu();
+	 					}
+	 				}
+	 			}
+	 			else {
+	 				buyer = Buyer.class.cast(users);
+	 				buyerMenu();
+	 			}
 			}
-
 		}
-
 	}
+
+	private void buyerMenu() {
+		
+		String decision = "";
+		
+		do { 
+			System.out.println("-- Buyer Menu --");
+			System.out.println("1 -- View Active Auctions");
+			System.out.println("2 -- Make a Bid");
+			System.out.println("L1 -- Log out of System and Return to Main Menu");
+			System.out.println("L2 -- Log out of System and Quit Program");
+			
+			decision = Scan.next().toUpperCase(); 
+			
+			switch(decision) {
+			case"1": {
+				activeAuctions();
+				break;
+			}
+			case"2": {
+				makeBid();
+				break;
+			}
+			case"L1": {
+ 				logOutReturn();
+ 				break;
+ 			}
+			case"L2": { 
+ 				logOutQuit();
+ 				break;
+ 			}
+			}
+		}while (!decision.equals(""));
+		
+	}
+	
+private void activeAuctions() {
+		
+	}
+
+private void sellerMenu() {
+ 		
+ 		String decision = "";
+ 		
+ 		do {
+ 			System.out.println("-- Seller Menu --");
+ 			System.out.println("1 -- Create an Auction");
+ 			System.out.println("2 -- Show your Current Auctions");
+ 			System.out.println("L1 -- Log out of System and Return to Main Menu");
+ 			System.out.println("L2 -- Log out of System and Quit Program");
+
+ 			decision = Scan.next().toUpperCase();
+ 			
+ 			switch(decision) {
+ 			case"1": { 
+ 				createAuction();
+ 				break;
+ 			}
+ 			case"2": { 
+ 				currentAuctions();
+ 				break;
+ 			}
+ 			case"L1": {
+ 				logOutReturn();
+ 				break;
+ 			}
+ 			case"L2": { 
+ 				logOutQuit();
+ 				break;
+ 			}
+ 			}
+ 		}while (!decision.equals(""));
+ 	}
+ 	
+	private void createAuction() {
+ 		
+ 	}
+ 	
+ 	private void currentAuctions() {
+ 		
+ 	}
+ 	
+ 	private void logOutReturn() {
+	
+ 	}
+ 	private void logOutQuit() {
+	
+ 	}
+ 	
+ 	
 }
+
+
