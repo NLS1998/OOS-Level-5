@@ -11,6 +11,7 @@ import auctions.Buyer;
 import auctions.Seller;
 import auctions.User;
 
+
 public class Sys {
 
 	private Scanner Scan = new Scanner(System.in);
@@ -227,6 +228,7 @@ public class Sys {
 		} while (!decision.equals("Q"));
 		System.out.println("-- GOODBYE --");
 		System.exit(0);
+		
 	}
 
 	private void makeBid() {
@@ -253,7 +255,7 @@ public class Sys {
 				break;
 			}
 			case "2": {
-				currentAuctions();
+				currentAuctions(Username, users, auctions);
 				break;
 			}
 			case "L": {
@@ -266,9 +268,24 @@ public class Sys {
 		System.exit(0);
 	}
 
-
-	private void currentAuctions() {
-		// TODO
+	// Shows Sellers live auctions.
+	private void currentAuctions(String Username, List <User> users, List<Auction> auctions) {
+		for (int i = 0; i < auctions.size(); i++) {
+			Auction auc = auctions.get(i);
+			if (auc != null) {
+				if (auc.getSeller().equals(Username)) {
+					
+					
+					System.out.println("Auction : " + i);
+					
+					System.out.println("\nName of Auction -> " + auc.getItemName());
+					System.out.println("Reserve Price -> £" + auc.getReservePrice());
+					System.out.println("Start Price -> £" + auc.getStartPrice());
+					System.out.println("End Time/Date -> " + auc.formatDateTime());
+					System.out.println("Seller -> " + auc.getSeller());
+					System.out.println("");
+				}
+		}
 	}
 
-}
+}}
