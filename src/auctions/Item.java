@@ -1,10 +1,10 @@
 package auctions;
 
 public class Item {
-	private String description;
+	private String itemName;
 	
-	public Item(String description) {
-		setDescription(description);
+	public Item(String Itemname) {
+		setDescription(Itemname);
 	}
 	
 	@Override
@@ -12,11 +12,11 @@ public class Item {
 		return getDescription();
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescription(String Item) {
+		this.itemName = Item;
 	}
 	
 	public String getDescription() {
-		return description;
+		return itemName;
 	}
 }

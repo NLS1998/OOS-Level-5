@@ -9,20 +9,26 @@ public class Auction {
 	private String itemName;
 	private double startPrice;
 	private double reservePrice;
+	private int aucNo;
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yy");
 
-	public Auction(String itemName, double startPrice, double reservePrice, String Username, LocalDateTime minusSeconds) {
+	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime minusSeconds) {
 		this.itemName = itemName;
 		this.startPrice = startPrice;
 		this.reservePrice = reservePrice;
 		this.username = Username;
 		this.minusSeconds = minusSeconds;
+		this.aucNo = aucNo;
 
 		// TODO Auto-generated constructor stub
 	}
 
 	public String getItemName() {
 		return itemName;
+	}
+	
+	public int getAucNo () {
+		return aucNo;
 	}
 	
 	public String getSeller() {

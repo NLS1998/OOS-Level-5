@@ -20,6 +20,7 @@ public class Sys {
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
 	// creates user linked list
 	private List<User> users = new LinkedList<User>();
+	private int auctNo;
 
 	public Sys() {
 		users.add(new Seller("jack", "1122"));
@@ -29,15 +30,15 @@ public class Sys {
 		users.add(new Buyer("david", "3333"));
 
 		try {
-			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40)));
-			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400)));
-			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(0, "HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40)));
+			auctions.add(new Auction(1, "Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400)));
+			auctions.add(new Auction(2, "16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(3, "Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction(4, "Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(new Auction("Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(5, "Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction(6, "Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70)));
 
 		} catch (Exception e) {
 
@@ -136,19 +137,21 @@ public class Sys {
 		if (hs > 0) {
 		adding	= minute * hour;
 		total = (long) (adding * hs);
-		auctions.add(new Auction(itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total)));
+		auctions.add(new Auction(auctNo, itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total)));
 		System.out.println("Auction Created\n");
 		}
 		}
 
 	public void browseAuctions() {
 		// displays live auctions and end data
-		for (Auction auction : auctions) {
-			System.out.println("\nName of Auction -> " + auction.getItemName());
-			System.out.println("Reserve Price -> £" + auction.getReservePrice());
-			System.out.println("Start Price -> £" + auction.getStartPrice());
-			System.out.println("End Time/Date -> " + auction.formatDateTime());
-			System.out.println("Seller -> " + auction.getSeller());
+		for (int i = 0; i < auctions.size(); i++) {
+			Auction auc = auctions.get(i);
+			System.out.println("Auction No : " + i);
+			System.out.println("\nName of Auction -> " + auc.getItemName());
+			System.out.println("Reserve Price -> £" + auc.getReservePrice());
+			System.out.println("Start Price -> £" + auc.getStartPrice());
+			System.out.println("End Time/Date -> " + auc.formatDateTime());
+			System.out.println("Seller -> " + auc.getSeller());
 			System.out.println("");
 		}
 
@@ -216,7 +219,7 @@ public class Sys {
 				break;
 			}
 			case "2": {
-				makeBid();
+				makeBid(decision, users, auctions, auctNo);
 				break;
 			}
 			case "L": {
@@ -231,9 +234,28 @@ public class Sys {
 		
 	}
 
-	private void makeBid() {
-		// TODO
-	}
+	private void makeBid(String Userame, List<User>users, List<Auction>auctions, int auctNo) {
+		browseAuctions();
+
+		System.out.println("");
+		System.out.println("Please enter auction number ");
+		int aucNo = Scan.nextInt();
+		
+		while(aucNo >= 0) {
+		for(Auction auc : auctions) {
+			if (auc.getAucNo() == aucNo) {
+				
+				System.out.println("\nName of Auction -> " + auc.getItemName());
+				System.out.println("Reserve Price -> £" + auc.getReservePrice());
+				System.out.println("Start Price -> £" + auc.getStartPrice());
+				System.out.println("End Time/Date -> " + auc.formatDateTime());
+				System.out.println("Seller -> " + auc.getSeller());
+				System.out.println("");
+				
+			}
+		}break;
+		}}
+	
 
 	private void sellerMenu(String Username) {
 
@@ -276,7 +298,7 @@ public class Sys {
 				if (auc.getSeller().equals(Username)) {
 					
 					
-					System.out.println("Auction : " + i);
+					System.out.println("Auction : " + auctNo);
 					
 					System.out.println("\nName of Auction -> " + auc.getItemName());
 					System.out.println("Reserve Price -> £" + auc.getReservePrice());
