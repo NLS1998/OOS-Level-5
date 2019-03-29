@@ -6,8 +6,8 @@ public class Seller extends User{
 	private String Password;
 	
 
-	public Seller(String username, String password) {
-		super(username, password);
+	public Seller(String Username, String Password) {
+		super(Username, Password);
 
 	}
 

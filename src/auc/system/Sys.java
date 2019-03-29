@@ -46,7 +46,8 @@ public class Sys {
 		do {
 			System.out.println("\n**AUCTON MAIN MENU **");
 			System.out.println("1 - Browse Auctions"); // Feature A
-			System.out.println("2 - Login");
+			System.out.println("2 - Register");
+			System.out.println("3 - Login");
 			System.out.println("Q - Quit");
 			System.out.print("Pick : ");
 
@@ -57,7 +58,11 @@ public class Sys {
 				browseAuctions();
 				break;
 			}
-			case "2": {
+			case"2": {
+				register(users);
+				break;
+			}
+			case "3": {
 				login(users);
 				break;
 			}
@@ -66,6 +71,36 @@ public class Sys {
 		System.out.println("-- GOODBYE --");
 
 	}
+
+	private void register(List<User> users) {
+		
+		System.out.println("");
+		System.out.println("Please enter your Username : ");
+		String Username = Scan.next();
+
+		System.out.println("");
+		System.out.println("Please enter your Password : ");
+		String Password = Scan.next();
+		
+		System.out.println("");
+		System.out.println("Please Specifiy if you are a (B)Buyer or (S)Seller");
+		String Type = Scan.next().toUpperCase();
+		
+		if (Username == null) {
+			if (Type.equals("B")) {
+				users.add(new Buyer(Username, Password));
+			}
+			else {
+				if (Type.equals("S")) {
+					users.add(new Seller(Username, Password));
+				}
+				else {
+					System.out.println("B or S key inputs only");
+				}
+			}
+		}
+		
+}
 
 	public void browseAuctions() {
 		for (Auction auction : auctions) {

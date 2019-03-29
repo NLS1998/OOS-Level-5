@@ -25,4 +25,8 @@ public abstract class User {
 	public void setPassword(String Pass) {
 		this.Password = Pass;
 	}
+	
+	public String getType(String Type) {
+		return Type;
+	}
 }
