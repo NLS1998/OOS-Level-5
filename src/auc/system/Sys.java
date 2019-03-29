@@ -28,7 +28,7 @@ public class Sys {
 		users.add(new Buyer("david", "3333"));
 
 		try {
-			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, LocalDateTime.now().minusHours(40)));
 			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(86400)));
 			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
 
@@ -106,6 +106,37 @@ public class Sys {
 			}
 		}
 	}
+	
+	private void createAuction(List<User> users,  List<Auction> auctions, String Username) {
+		double adding;
+		long total = 0;
+		double minute = 60;
+		double secHour = 3600;
+		double hour = 60;
+		System.out.println("");
+		System.out.println("Please enter Item Name : ");
+		String itemName = Scan.next();
+
+		System.out.println("");
+		System.out.println("Please enter your Starting Price : ");
+		double startPrice = Scan.nextDouble();
+
+		System.out.println("");
+		System.out.println("Please enter your Reserve Price : ");
+		double resPrice = Scan.nextDouble();
+		
+		System.out.println("");
+		System.out.println("Please enter your auction end date (in hours) : ");
+		int hs = Scan.nextInt();
+	
+		// algorithm to convert hours to seconds and store to Auction linked list.
+		if (hs > 0) {
+		adding	= minute * hour;
+		total = (long) (adding * hs);
+		auctions.add(new Auction(itemName, startPrice, resPrice, LocalDateTime.now().plusSeconds(total)));
+		System.out.println("Auction Created\n");
+		}
+		}
 
 	public void browseAuctions() {
 		// displays live auctions and end data
@@ -215,7 +246,7 @@ public class Sys {
 
 			switch (decision) {
 			case "1": {
-				createAuction();
+				createAuction(users, auctions, decision);
 				break;
 			}
 			case "2": {
@@ -232,9 +263,6 @@ public class Sys {
 		System.exit(0);
 	}
 
-	private void createAuction() {
-		// TODO
-	}
 
 	private void currentAuctions() {
 		// TODO
