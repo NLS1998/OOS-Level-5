@@ -15,8 +15,9 @@ public class Sys {
 
 	private Scanner Scan = new Scanner(System.in);
 	String choice = "";
-
+	// creates a auction collection linked list
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
+	// creates user linked list
 	private List<User> users = new LinkedList<User>();
 
 	public Sys() {
@@ -31,13 +32,11 @@ public class Sys {
 			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(86400)));
 			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(
-					new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
 			auctions.add(new Auction("Apple AirPods", 50.00, 100.00, LocalDateTime.now().plusSeconds(70)));
 
 			auctions.add(new Auction("Windows Laptop 2016", 100.00, 150.00, LocalDateTime.now().minusSeconds(40)));
-			auctions.add(
-					new Auction("Apple Macbook Black May 2010", 100.00, 150.00, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction("Apple Macbook Black May 2010", 100.00, 150.00, LocalDateTime.now().plusSeconds(70)));
 
 		} catch (Exception e) {
 
@@ -45,6 +44,7 @@ public class Sys {
 	}
 
 	public void run() {
+		// System initiates.
 		do {
 			System.out.println("\n**AUCTON MAIN MENU **");
 			System.out.println("1 - Browse Auctions"); // Feature A
@@ -88,6 +88,8 @@ public class Sys {
 		System.out.println("Please Specifiy if you are a (B)Buyer or (S)Seller");
 		String Type = Scan.next().toUpperCase();
 
+		// checks if username variable is null if not stores new user and password to
+		// user list.
 		if (Username != null) {
 			if (Type.equals("B")) {
 				users.add(new Buyer(Username, Password));
@@ -104,6 +106,7 @@ public class Sys {
 	}
 
 	public void browseAuctions() {
+		// displays live auctions and end data
 		for (Auction auction : auctions) {
 			System.out.println("Name of Auction -> " + auction.getItemName());
 			System.out.println("Reserve Price -> £" + auction.getReservePrice());
@@ -115,7 +118,7 @@ public class Sys {
 	}
 
 	private void login(List<User> users) {
-
+		// User log in
 		System.out.println("");
 		System.out.println("Please enter your Username : ");
 		String Username = Scan.next();
@@ -158,6 +161,7 @@ public class Sys {
 
 	private void buyerMenu() {
 
+		// buyer menu for users who are stored as buyers
 		String decision = "";
 
 		do {
@@ -190,11 +194,12 @@ public class Sys {
 	}
 
 	private void makeBid() {
-
+		// TODO
 	}
 
 	private void sellerMenu() {
 
+		// Seller menu for users stored as a seller.
 		String decision = "";
 
 		do {
@@ -226,11 +231,11 @@ public class Sys {
 	}
 
 	private void createAuction() {
-
+		// TODO
 	}
 
 	private void currentAuctions() {
-
+		// TODO
 	}
 
 }
