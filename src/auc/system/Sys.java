@@ -93,11 +93,13 @@ public class Sys {
 		if (Username != null) {
 			if (Type.equals("B")) {
 				users.add(new Buyer(Username, Password));
-				System.out.println("Please Log in");
+				System.out.println("Welcome : " + Username + "!!" + "\n");
+				System.out.println("Log in");
 				login(users);
 			} else if (Type.equals("S")) {
 				users.add(new Seller(Username, Password));
-				System.out.println("Please Log in");
+				System.out.println("Welcome : " + Username + "!!" + "\n");
+				System.out.println("Log in");
 				login(users);
 			} else {
 				System.out.println("B or S key inputs only");
