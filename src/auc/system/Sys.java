@@ -31,11 +31,13 @@ public class Sys {
 			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(86400)));
 			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
+			auctions.add(
+					new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
 			auctions.add(new Auction("Apple AirPods", 50.00, 100.00, LocalDateTime.now().plusSeconds(70)));
 
 			auctions.add(new Auction("Windows Laptop 2016", 100.00, 150.00, LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Apple Macbook Black May 2010", 100.00, 150.00, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(
+					new Auction("Apple Macbook Black May 2010", 100.00, 150.00, LocalDateTime.now().plusSeconds(70)));
 
 		} catch (Exception e) {
 
@@ -58,7 +60,7 @@ public class Sys {
 				browseAuctions();
 				break;
 			}
-			case"2": {
+			case "2": {
 				register(users);
 				break;
 			}
@@ -73,7 +75,7 @@ public class Sys {
 	}
 
 	private void register(List<User> users) {
-		
+
 		System.out.println("");
 		System.out.println("Please enter your Username : ");
 		String Username = Scan.next();
@@ -81,26 +83,25 @@ public class Sys {
 		System.out.println("");
 		System.out.println("Please enter your Password : ");
 		String Password = Scan.next();
-		
+
 		System.out.println("");
 		System.out.println("Please Specifiy if you are a (B)Buyer or (S)Seller");
 		String Type = Scan.next().toUpperCase();
-		
-		if (Username == null) {
+
+		if (Username != null) {
 			if (Type.equals("B")) {
 				users.add(new Buyer(Username, Password));
-			}
-			else {
-				if (Type.equals("S")) {
-					users.add(new Seller(Username, Password));
-				}
-				else {
-					System.out.println("B or S key inputs only");
-				}
+				System.out.println("Please Log in");
+				login(users);
+			} else if (Type.equals("S")) {
+				users.add(new Seller(Username, Password));
+				System.out.println("Please Log in");
+				login(users);
+			} else {
+				System.out.println("B or S key inputs only");
 			}
 		}
-		
-}
+	}
 
 	public void browseAuctions() {
 		for (Auction auction : auctions) {
@@ -133,7 +134,7 @@ public class Sys {
 			}
 		}
 		if (isExist) {
-			System.out.println("Logged in as " + Username);
+			System.out.println("Logged in as " + Username + "\n");
 			for (User u : users) {
 				while (u.Username.equals(Username)) {
 					if (u instanceof Buyer) {
