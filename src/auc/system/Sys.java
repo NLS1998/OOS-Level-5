@@ -28,15 +28,15 @@ public class Sys {
 		users.add(new Buyer("david", "3333"));
 
 		try {
-			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, LocalDateTime.now().minusHours(40)));
-			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, LocalDateTime.now().plusSeconds(86400)));
-			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction("HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40)));
+			auctions.add(new Auction("Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400)));
+			auctions.add(new Auction("16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00, LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Apple AirPods", 50.00, 100.00, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction("Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction("Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70)));
 
-			auctions.add(new Auction("Windows Laptop 2016", 100.00, 150.00, LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction("Apple Macbook Black May 2010", 100.00, 150.00, LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction("Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40)));
+			auctions.add(new Auction("Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70)));
 
 		} catch (Exception e) {
 
@@ -107,7 +107,7 @@ public class Sys {
 		}
 	}
 	
-	private void createAuction(List<User> users,  List<Auction> auctions, String Username) {
+	private void createAuction( List<Auction> auctions, String Username) {
 		double adding;
 		long total = 0;
 		double minute = 60;
@@ -129,11 +129,13 @@ public class Sys {
 		System.out.println("Please enter your auction end date (in hours) : ");
 		int hs = Scan.nextInt();
 	
-		// algorithm to convert hours to seconds and store to Auction linked list.
+	    
+		// algorithm to convert hours to seconds and add to Auction linked list.
+		// Including seller name.
 		if (hs > 0) {
 		adding	= minute * hour;
 		total = (long) (adding * hs);
-		auctions.add(new Auction(itemName, startPrice, resPrice, LocalDateTime.now().plusSeconds(total)));
+		auctions.add(new Auction(itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total)));
 		System.out.println("Auction Created\n");
 		}
 		}
@@ -141,10 +143,11 @@ public class Sys {
 	public void browseAuctions() {
 		// displays live auctions and end data
 		for (Auction auction : auctions) {
-			System.out.println("Name of Auction -> " + auction.getItemName());
+			System.out.println("\nName of Auction -> " + auction.getItemName());
 			System.out.println("Reserve Price -> £" + auction.getReservePrice());
 			System.out.println("Start Price -> £" + auction.getStartPrice());
 			System.out.println("End Time/Date -> " + auction.formatDateTime());
+			System.out.println("Seller -> " + auction.getSeller());
 			System.out.println("");
 		}
 
@@ -178,7 +181,7 @@ public class Sys {
 						break;
 
 					} else {
-						sellerMenu();
+						sellerMenu(Username);
 						break;
 					}
 				}
@@ -230,7 +233,7 @@ public class Sys {
 		// TODO
 	}
 
-	private void sellerMenu() {
+	private void sellerMenu(String Username) {
 
 		// Seller menu for users stored as a seller.
 		String decision = "";
@@ -246,7 +249,7 @@ public class Sys {
 
 			switch (decision) {
 			case "1": {
-				createAuction(users, auctions, decision);
+				createAuction(auctions, Username);
 				break;
 			}
 			case "2": {
