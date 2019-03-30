@@ -6,6 +6,7 @@ public class Bid {
 	private double amount;
 	private Buyer who;
 	private Date when;
+
 	
 	public Bid( double amount, Buyer who, Date when) {
 		this.amount = amount;
@@ -15,6 +16,10 @@ public class Bid {
 	
 	public double getAmount() {
 		return amount;
+	}
+
+	public void setBid(double Bid) {
+		this.amount = Bid;
 	}
 	
 	public Buyer getWho() {

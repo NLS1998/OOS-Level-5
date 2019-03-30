@@ -113,8 +113,8 @@ public class Sys {
 		double adding;
 		long total = 0;
 		double minute = 60;
-		double secHour = 3600;
 		double hour = 60;
+		
 		System.out.println("");
 		System.out.println("Please enter Item Name : ");
 		String itemName = Scan.next();
@@ -143,7 +143,7 @@ public class Sys {
 		}
 
 	public void browseAuctions() {
-		// displays live auctions and end data
+		// displays live auctions and end date
 		for (int i = 0; i < auctions.size(); i++) {
 			Auction auc = auctions.get(i);
 			System.out.println("Auction No : " + i);
@@ -240,7 +240,8 @@ public class Sys {
 		System.out.println("");
 		System.out.println("Please enter auction number ");
 		int aucNo = Scan.nextInt();
-		
+		// so far allows Buyer to select an auction via number and displays this to console.
+		// need to allow user to make a bid.
 		while(aucNo >= 0) {
 		for(Auction auc : auctions) {
 			if (auc.getAucNo() == aucNo) {
@@ -254,8 +255,8 @@ public class Sys {
 				
 			}
 		}break;
-		}}
-	
+		}
+	}
 
 	private void sellerMenu(String Username) {
 
@@ -289,6 +290,7 @@ public class Sys {
 		System.out.println("-- GOODBYE --");
 		System.exit(0);
 	}
+
 
 	// Shows Sellers live auctions.
 	private void currentAuctions(String Username, List <User> users, List<Auction> auctions) {

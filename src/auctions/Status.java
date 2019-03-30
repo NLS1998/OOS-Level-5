@@ -3,7 +3,8 @@ package auctions;
 public class Status {
 	
 	enum Stat {
-		OPEN,
+		PENDING,
+		ACTIVE,
 		CLOSED,
 	}
 		
