@@ -11,14 +11,16 @@ public class Auction {
 	private double reservePrice;
 	private int aucNo;
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yy");
+	private String status; 
 
-	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime minusSeconds) {
+	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime minusSeconds, String status) {
 		this.itemName = itemName;
 		this.startPrice = startPrice;
 		this.reservePrice = reservePrice;
 		this.username = Username;
 		this.minusSeconds = minusSeconds;
 		this.aucNo = aucNo;
+		this.status = status;
 
 		// TODO Auto-generated constructor stub
 	}
@@ -49,6 +51,14 @@ public class Auction {
 
 	public double getReservePrice() {
 		return reservePrice;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public Object getCloseDateTime() {
+		return null;
 	}
 
 }
