@@ -3,26 +3,26 @@ package auctions;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Auction {
-	LocalDateTime minusSeconds = LocalDateTime.now();
+import auctions.Status.Stat;
+
+public final class Auction {
+	private Boolean blocked = false;
+	private LocalDateTime closeDateTime;
 	private String username;
 	private String itemName;
-	private double startPrice;
-	private double reservePrice;
+	private double startPrice, reservePrice;
 	private int aucNo;
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yy");
-	private String status; 
+	private Stat status = Stat.PENDING; 
 
-	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime minusSeconds, String status) {
+	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime closeDateTime, Stat status) {
 		this.itemName = itemName;
 		this.startPrice = startPrice;
 		this.reservePrice = reservePrice;
 		this.username = Username;
-		this.minusSeconds = minusSeconds;
+		this.closeDateTime = closeDateTime;
 		this.aucNo = aucNo;
 		this.status = status;
-
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getItemName() {
@@ -42,7 +42,7 @@ public class Auction {
 	}
 	
 	public String formatDateTime() {
-		return minusSeconds.format(formatter);
+		return closeDateTime.format(formatter);
 	}
 
 	public double getStartPrice() {
@@ -53,12 +53,33 @@ public class Auction {
 		return reservePrice;
 	}
 
-	public String getStatus() {
+	public Stat getStatus() {
 		return status;
 	}
 
-	public Object getCloseDateTime() {
+	public LocalDateTime getCloseDateTime() {
+		return closeDateTime;
+	}
+	
+	public synchronized void close() {
+ 		status = Stat.CLOSED;
+ 		
+ 		Bid highest;
+ 		
+ 		if ((highest = getHighestBid()) !=null) {
+ 			if (highest.getAmount() >= reservePrice)
+ 				highest.getWho();
+ 		}
+ 		return;
+ 	}
+
+	private Bid getHighestBid() {
 		return null;
 	}
+	
+	private String getWins() {
+		return itemName;
+	}
+
 
 }

@@ -2,7 +2,7 @@ package auctions;
 
 public class Block {
 
-	enum Blockable {
+	public enum Blockable {
 		BLOCKED, UNBLOCKED
 	}
 

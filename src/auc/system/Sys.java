@@ -9,7 +9,9 @@ import java.util.Scanner;
 import auctions.Auction;
 import auctions.Buyer;
 import auctions.Seller;
+import auctions.StatusCheck;
 import auctions.User;
+import auctions.Status.Stat;
 
 
 public class Sys {
@@ -30,19 +32,22 @@ public class Sys {
 		users.add(new Buyer("david", "3333"));
 
 		try {
-			auctions.add(new Auction(0, "HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40), ));
-			auctions.add(new Auction(1, "Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400)));
-			auctions.add(new Auction(2, "16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(0, "HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40), Stat.ACTIVE));
+			auctions.add(new Auction(1, "Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400), Stat.ACTIVE));
+			auctions.add(new Auction(2, "16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
 
-			auctions.add(new Auction(3, "Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction(4, "Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(3, "Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40), Stat.ACTIVE));
+			auctions.add(new Auction(4, "Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
 
-			auctions.add(new Auction(5, "Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40)));
-			auctions.add(new Auction(6, "Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70)));
+			auctions.add(new Auction(5, "Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40), Stat.ACTIVE));
+			auctions.add(new Auction(6, "Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
 
 		} catch (Exception e) {
 
 		}
+		
+		new Thread(new StatusCheck(auctions, 30)).start();
+
 	}
 
 	public void run() {
@@ -137,7 +142,7 @@ public class Sys {
 		if (hs > 0) {
 		adding	= minute * hour;
 		total = (long) (adding * hs);
-		auctions.add(new Auction(auctNo, itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total)));
+		auctions.add(new Auction(auctNo, itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total), Stat.ACTIVE));
 		System.out.println("Auction Created\n");
 		}
 		}
@@ -208,6 +213,7 @@ public class Sys {
 			System.out.println("-- Buyer Menu --");
 			System.out.println("1 -- View Active Auctions");
 			System.out.println("2 -- Make a Bid");
+			System.out.println("3 -- My Wins");
 			System.out.println("L -- Log out of System and Return to Main Menu");
 			System.out.println("Q -- Log out of System and Quit Program");
 
@@ -222,6 +228,10 @@ public class Sys {
 				makeBid(decision, users, auctions, auctNo);
 				break;
 			}
+			case "3": {
+//				myWins(users);
+				break;
+			}
 			case "L": {
 				System.out.println("Logged Out");
 				run();
@@ -233,6 +243,23 @@ public class Sys {
 		System.exit(0);
 		
 	}
+	
+	
+	
+//	private void myWins(List<User> users) {
+//	System.out.println("-- These are your Winning Auctions --");
+//	
+//	List<Auction> wins = this.users.getWins();
+//	
+//	if (wins.isEmpty()) {
+//		System.out.println("You have Won nothing !");
+//		return;
+//	}
+//	for (Auction win : wins) { 
+//		System.out.println(win.toString());
+//	}
+//}
+
 
 	private void makeBid(String Userame, List<User>users, List<Auction>auctions, int auctNo) {
 		browseAuctions();
