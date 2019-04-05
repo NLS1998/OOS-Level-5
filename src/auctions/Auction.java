@@ -80,6 +80,9 @@ public final class Auction {
 	private String getWins() {
 		return itemName;
 	}
-
+	
+	public String toStrings() {
+		return "\nEnded : " + itemName + "\n" + closeDateTime.format(formatter);
+	}
 
 }
