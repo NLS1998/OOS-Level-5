@@ -2,6 +2,8 @@ package auctions;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 
 import auctions.Status.Stat;
 
@@ -12,27 +14,33 @@ public final class Auction {
 	private String itemName;
 	private double startPrice, reservePrice;
 	private int aucNo;
+	private List<Bid> bids = new LinkedList<Bid>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yy");
-	private Stat status = Stat.PENDING; 
+	private Stat status = Stat.PENDING;
 
-	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username, LocalDateTime closeDateTime, Stat status) {
-		this.itemName = itemName;
-		this.startPrice = startPrice;
-		this.reservePrice = reservePrice;
-		this.username = Username;
-		this.closeDateTime = closeDateTime;
-		this.aucNo = aucNo;
-		this.status = status;
+	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username,
+			LocalDateTime closeDateTime, Stat status) throws Exception {
+		if (closeDateTime.isBefore(LocalDateTime.now().plusDays(7))) {
+			this.itemName = itemName;
+			this.startPrice = startPrice;
+			this.reservePrice = reservePrice;
+			this.username = Username;
+			this.closeDateTime = closeDateTime;
+			this.aucNo = aucNo;
+			this.status = status;
+		} else {
+			throw new Exception("ERROR ON CloseDateTime : ( " + closeDateTime.format(formatter.ofPattern("d MMM yy")));
+		}
 	}
 
 	public String getItemName() {
 		return itemName;
 	}
-	
-	public int getAucNo () {
+
+	public int getAucNo() {
 		return aucNo;
 	}
-	
+
 	public String getSeller() {
 		return username;
 	}
@@ -40,7 +48,7 @@ public final class Auction {
 	public void setSeller(String User) {
 		this.username = User;
 	}
-	
+
 	public String formatDateTime() {
 		return closeDateTime.format(formatter);
 	}
@@ -60,27 +68,28 @@ public final class Auction {
 	public LocalDateTime getCloseDateTime() {
 		return closeDateTime;
 	}
-	
+
 	public synchronized void close() {
- 		status = Stat.CLOSED;
- 		
- 		Bid highest;
- 		
- 		if ((highest = getHighestBid()) !=null) {
- 			if (highest.getAmount() >= reservePrice)
- 				highest.getWho();
- 		}
- 		return;
- 	}
+		status = Stat.CLOSED;
+
+		Bid highest;
+
+		if ((highest = getHighestBid()) != null) {
+			if (highest.getAmount() >= reservePrice)
+				highest.getWho();
+		}
+
+		return;
+	}
 
 	private Bid getHighestBid() {
 		return null;
 	}
-	
+
 	private String getWins() {
-		return itemName;
+		return itemName ;
 	}
-	
+
 	public String toStrings() {
 		return "\nEnded : " + itemName + "\n" + closeDateTime.format(formatter);
 	}

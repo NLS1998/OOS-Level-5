@@ -15,6 +15,7 @@ import auctions.Status.Stat;
 
 
 public class Sys {
+	private Buyer buyer;
 
 	private Scanner Scan = new Scanner(System.in);
 	String choice = "";
@@ -142,7 +143,12 @@ public class Sys {
 		if (hs > 0) {
 		adding	= minute * hour;
 		total = (long) (adding * hs);
-		auctions.add(new Auction(auctNo, itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total), Stat.ACTIVE));
+		try {
+			auctions.add(new Auction(auctNo, itemName, startPrice, resPrice, Username, LocalDateTime.now().plusSeconds(total), Stat.ACTIVE));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Auction Created\n");
 		}
 		}
@@ -225,11 +231,11 @@ public class Sys {
 				break;
 			}
 			case "2": {
-				makeBid(decision, users, auctions, auctNo);
+				makeBid();
 				break;
 			}
 			case "3": {
-//				myWins(users);
+				myWins();
 				break;
 			}
 			case "L": {
@@ -246,22 +252,22 @@ public class Sys {
 	
 	
 	
-//	private void myWins(List<User> users) {
-//	System.out.println("-- These are your Winning Auctions --");
-//	
-//	List<Auction> wins = this.users.getWins();
-//	
-//	if (wins.isEmpty()) {
-//		System.out.println("You have Won nothing !");
-//		return;
-//	}
-//	for (Auction win : wins) { 
-//		System.out.println(win.toString());
-//	}
-//}
+	private void myWins() {
+	System.out.println("-- These are your Winning Auctions --");
+	
+	List<Auction> wins = this.buyer.getWins();
+	
+	if (wins.isEmpty()) {
+		System.out.println("You have Won nothing !");
+		return;
+	}
+	for (Auction win : wins) { 
+		System.out.println(win.toString());
+	}
+}
 
 
-	private void makeBid(String Userame, List<User>users, List<Auction>auctions, int auctNo) {
+	private void makeBid() {
 		browseAuctions();
 
 		System.out.println("");
@@ -279,6 +285,9 @@ public class Sys {
 				System.out.println("End Time/Date -> " + auc.formatDateTime());
 				System.out.println("Seller -> " + auc.getSeller());
 				System.out.println("");
+				System.out.println("Please add your bid amount : "); 
+				double amount = Scan.nextDouble();
+				
 				
 			}
 		}break;

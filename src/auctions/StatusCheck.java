@@ -7,13 +7,13 @@ import auctions.Status.Stat;
 
 public class StatusCheck implements Runnable {
 	private List<Auction> auctions;
-	private final Integer delay; 
-	
-	public StatusCheck (List<Auction> auctions, Integer seconds) {
-		this.auctions = auctions; 
-		this.delay = seconds * 1000; 
+	private final Integer delay;
+
+	public StatusCheck(List<Auction> auctions, Integer seconds) {
+		this.auctions = auctions;
+		this.delay = seconds * 1000;
 	}
-	
+
 	@Override
 	public void run() {
 		while (true) {
@@ -28,14 +28,17 @@ public class StatusCheck implements Runnable {
 								System.err.println(auction.toStrings());
 
 							}
+
 						}
 					}
 
 				}
 			}
+
 			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
+
 }
