@@ -14,6 +14,7 @@ public class StatusCheck implements Runnable {
 		this.delay = seconds * 1000;
 	}
 
+// Method below is used for Threading for timing auctions out. 
 	@Override
 	public void run() {
 		while (true) {

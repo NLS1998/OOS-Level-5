@@ -29,8 +29,4 @@ public abstract class User {
 	public String getType(String Type) {
 		return Type;
 	}
-	
-//	public String getWins() {
-//		return 
-//	}
 }

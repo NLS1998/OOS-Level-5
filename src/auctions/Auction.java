@@ -6,17 +6,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 import auctions.Status.Stat;
+import auctions.Bid;
 
 public final class Auction {
 	private Boolean blocked = false;
 	private LocalDateTime closeDateTime;
 	private String username;
 	private String itemName;
-	private double startPrice, reservePrice;
+	public double startPrice, reservePrice;
 	private int aucNo;
 	private List<Bid> bids = new LinkedList<Bid>();
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yy");
 	private Stat status = Stat.PENDING;
+	Bid highest;
+	
+
 
 	public Auction(int aucNo, String itemName, double startPrice, double reservePrice, String Username,
 			LocalDateTime closeDateTime, Stat status) throws Exception {
@@ -69,11 +73,12 @@ public final class Auction {
 		return closeDateTime;
 	}
 
+// This method closes the auction. 
 	public synchronized void close() {
 		status = Stat.CLOSED;
 
-		Bid highest;
 
+// Finds the highest bid, checks it against the reserve price and then finds who's was the winning bid. 
 		if ((highest = getHighestBid()) != null) {
 			if (highest.getAmount() >= reservePrice)
 				highest.getWho();
@@ -82,16 +87,27 @@ public final class Auction {
 		return;
 	}
 
-	private Bid getHighestBid() {
-		return null;
-	}
-
-	private String getWins() {
-		return itemName ;
+	public Bid getHighestBid() {
+		return highest; 
 	}
 
 	public String toStrings() {
 		return "\nEnded : " + itemName + "\n" + closeDateTime.format(formatter);
 	}
+	
+// Method to allow a buyer to place a bid. 
+//	public void placeBid(Double amount, Buyer who, LocalDateTime when) throws Exception {
+//	// Checks the status is active first. 
+//		if (getStatus() == Stat.ACTIVE) {
+//			// Then adds a new bid. 
+//				bids.add(new Bid(amount, who, when));
+//			}
+//		// If doesn't apply to above then goes to exception and throws an error. 
+//			else {
+//				throw new Exception ("Amount has Error " + amount);
+//		}
+//	}
+	
+
 
 }

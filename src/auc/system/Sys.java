@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import auctions.Auction;
+import auctions.Bid;
 import auctions.Buyer;
 import auctions.Seller;
+import auctions.Status.Stat;
 import auctions.StatusCheck;
 import auctions.User;
-import auctions.Status.Stat;
 
 
 public class Sys {
@@ -23,9 +24,12 @@ public class Sys {
 	private List<Auction> auctions = Collections.synchronizedList(new LinkedList<Auction>());
 	// creates user linked list
 	private List<User> users = new LinkedList<User>();
+	private List<Bid> bids = new LinkedList<Bid>();
 	private int auctNo;
 
 	public Sys() {
+		
+		// Stored User details. 
 		users.add(new Seller("jack", "1122"));
 		users.add(new Seller("robby", "2211"));
 		users.add(new Buyer("nick", "1111"));
@@ -33,15 +37,17 @@ public class Sys {
 		users.add(new Buyer("david", "3333"));
 
 		try {
-			auctions.add(new Auction(0, "HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(40), Stat.ACTIVE));
-			auctions.add(new Auction(1, "Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(86400), Stat.ACTIVE));
-			auctions.add(new Auction(2, "16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
+			
+			// Stored item details. 
+			auctions.add(new Auction(0, "HDMI Cable", 7.50, 12.50, "jack", LocalDateTime.now().minusHours(180), Stat.ACTIVE));
+			auctions.add(new Auction(1, "Amazon Echo Dot", 7.50, 12.50, "robby", LocalDateTime.now().plusSeconds(180), Stat.ACTIVE));
+			auctions.add(new Auction(2, "16GB Micro SD Card", 7.50, 12.50, "jack", LocalDateTime.now().plusSeconds(180), Stat.ACTIVE));
 
-			auctions.add(new Auction(3, "Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(40), Stat.ACTIVE));
-			auctions.add(new Auction(4, "Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
+			auctions.add(new Auction(3, "Apple USB-C to HDMI Dongle", 50.00, 100.00,"robby", LocalDateTime.now().minusSeconds(160), Stat.ACTIVE));
+			auctions.add(new Auction(4, "Apple AirPods", 50.00, 100.00, "jack", LocalDateTime.now().plusSeconds(160), Stat.ACTIVE));
 
-			auctions.add(new Auction(5, "Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(40), Stat.ACTIVE));
-			auctions.add(new Auction(6, "Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(70), Stat.ACTIVE));
+			auctions.add(new Auction(5, "Windows Laptop 2016", 100.00, 150.00, "robby", LocalDateTime.now().minusSeconds(400), Stat.ACTIVE));
+			auctions.add(new Auction(6, "Apple Macbook Black May 2010", 100.00, 150.00, "jack", LocalDateTime.now().plusSeconds(400), Stat.ACTIVE));
 
 		} catch (Exception e) {
 
@@ -81,7 +87,8 @@ public class Sys {
 		System.out.println("-- GOODBYE --");
 
 	}
-
+	
+// Allows user to register an account.
 	private void register(List<User> users) {
 
 		System.out.println("");
@@ -115,6 +122,7 @@ public class Sys {
 		}
 	}
 	
+// Allows seller to create an auction. 
 	private void createAuction( List<Auction> auctions, String Username) {
 		double adding;
 		long total = 0;
@@ -168,6 +176,7 @@ public class Sys {
 
 	}
 
+// Once users selects to log in this code is used. 
 	private void login(List<User> users) {
 		// User log in
 		System.out.println("");
@@ -251,7 +260,7 @@ public class Sys {
 	}
 	
 	
-	
+// Feature for displaying users winning auctions as a buyer. 
 	private void myWins() {
 	System.out.println("-- These are your Winning Auctions --");
 	
@@ -266,7 +275,7 @@ public class Sys {
 	}
 }
 
-
+// Feature so Buyer can make a bit on specific auction. 
 	private void makeBid() {
 		browseAuctions();
 
@@ -276,7 +285,8 @@ public class Sys {
 		// so far allows Buyer to select an auction via number and displays this to console.
 		// need to allow user to make a bid.
 		while(aucNo >= 0) {
-		for(Auction auc : auctions) {
+			for(Auction auc : auctions) {
+			
 			if (auc.getAucNo() == aucNo) {
 				
 				System.out.println("\nName of Auction -> " + auc.getItemName());
@@ -286,14 +296,33 @@ public class Sys {
 				System.out.println("Seller -> " + auc.getSeller());
 				System.out.println("");
 				System.out.println("Please add your bid amount : "); 
+			
 				double amount = Scan.nextDouble();
-				
-				
+				for(Bid bid : bids) {
+			if (amount >= auc.startPrice) { 
+				bids.add(new Bid(amount, buyer, LocalDateTime.now()));
+				System.out.println("Bid accepted for Auction number " + aucNo + " " + auc.getItemName());
+			if (amount > bid.getHighestBid()) {
+				System.out.println("New highest bid for " + aucNo + " " + auc.getItemName());
 			}
-		}break;
+			else {
+				System.out.println("Bid not Accepted !!");
+			}
+		
+		}	
+		
 		}
-	}
 
+		}
+			
+	}
+		break;	}
+	}
+	
+		
+	
+
+// Menu is displayed once system has identified log on details as a seller. 
 	private void sellerMenu(String Username) {
 
 		// Seller menu for users stored as a seller.
